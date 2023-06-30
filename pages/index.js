@@ -11,9 +11,9 @@ const Home = () => {
     <div className="bg-my-bg-image bg-cover bg-center bg-blend-darken bg-green-200 text-black h-screen overflow-scroll z-100">
       <AwsAuthPage />
       {/* HomePage */}
-      <section id="hero" className="snap-start ">
+      {/* <section id="hero" className="snap-start ">
         < HomePage />
-      </section>
+      </section> */}
 
     </div>
   );

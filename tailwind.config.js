@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        'custom': '5px 5px 10px #aba6a6, -5px -5px 10px #c5bebe',
+        'custom': '3px 3px 3px #aba6a6, -3px -3px 3px #c5bebe',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

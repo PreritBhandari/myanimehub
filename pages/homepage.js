@@ -15,7 +15,7 @@ function HomePage() {
             <input value={name} onChange={(e) => setName(e.target.value)} className="max-w-10xl w-6/12 mx-auto p-3 bg-[#e0e0e0] rounded-xl shadow-custom overflow-hidden md:max-w-5xl"
                 placeholder='Type anime to search ..'
             />
-            <button onClick={searchAnime} className='text-black font-semibold bg-[#e0e0e0] p-2 rounded-md hover:bg-green-200  shadow-md'>
+            <button onClick={searchAnime} className='text-black font-semibold bg-green-100  p-2 rounded-md hover:bg-green-200  shadow-md'>
                 Search
             </button>
 
