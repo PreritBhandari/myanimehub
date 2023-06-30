@@ -1,24 +1,19 @@
 "use client";
+import { Card, Grid, useTheme } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react'
-import api from '../services/api';
+import { CustomCard } from '../components/customCard';
 
 function HomePage() {
-    const [name, setName] = useState("");
-    const [animeList, setAnimeList] = useState("");
-    const searchAnime = () => {
-        name &&
-            api.get(`/anime?q=${name}`).then((res) => setAnimeList(res.data))
-    }
+
 
     return (
-        <div className=" h-[80vh] flex flex-col space-y-8 items-center justify-center text-center overflow-hidden">
-            <input value={name} onChange={(e) => setName(e.target.value)} className="max-w-10xl w-6/12 mx-auto p-3 bg-[#e0e0e0] rounded-xl shadow-custom overflow-hidden md:max-w-5xl"
-                placeholder='Type anime to search ..'
-            />
-            <button onClick={searchAnime} className='text-black font-semibold bg-green-100  p-2 rounded-md hover:bg-green-200  shadow-md'>
-                Search
-            </button>
-
+        <div className=" grid grid-cols-1 md:grid-cols-5 mb-10 place-items-center h-[80vh] items-center justify-center text-center overflow-scroll w-12/12  max-w-10xl  z-20">
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
+            <CustomCard />
         </div>
     )
 }
