@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplify832b5c281c174-staging-134119-authRole",
+      "UnauthRoleArn": "arn:aws:iam::415064770425:role/amplify-amplify832b5c281c174-staging-134119-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::415064770425:role/amplify-amplify832b5c281c174-staging-134119-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplify832b5c281c174-staging-134119-deployment",
+      "UnauthRoleName": "amplify-amplify832b5c281c174-staging-134119-unauthRole",
+      "StackName": "amplify-amplify832b5c281c174-staging-134119",
+      "StackId": "arn:aws:cloudformation:us-east-1:415064770425:stack/amplify-amplify832b5c281c174-staging-134119/a0c68b70-1682-11ee-992a-123e27304555",
+      "AmplifyAppId": "d17gri1e30jtf1"
+    },
+    "categories": {
+      "auth": {
+        "myanimehub387b8d33": {}
+      },
+      "api": {
+        "myanimehub": {}
+      }
+    }
+  }
+}
