@@ -10,21 +10,24 @@ import {
     useTheme,
 } from '@aws-amplify/ui-react';
 
-export const CustomCard = () => {
+export const CustomCard = ({ animeData }) => {
     const { tokens } = useTheme();
     return (
         <View
-            backgroundColor={tokens.colors.background.secondary}
+            backgroundColor={tokens.colors.background.success}
             padding={tokens.space.xxs}
             width={300}
+            height={450}
             marginTop={20}
         >
-            <Card>
+            <Card backgroundColor={tokens.colors.background.success}
+            >
                 <Flex direction="column" alignItems="flex-start">
                     <Image
                         alt="Road to milford sound"
-                        src="/images/startpage.jpg"
+                        src={animeData.images.jpg['image_url']}
                         width="100%"
+                        height={250}
                     />
                     <Flex
                         direction="column"
@@ -32,16 +35,18 @@ export const CustomCard = () => {
                         gap={tokens.space.xs}
                     >
                         <Flex>
-                            <Badge size="small" variation="info">
-                                8.5
+                            {animeData.score && <Badge size="small" variation="info">
+                                {animeData.score}
                             </Badge>
-                            <Badge size="small" variation="success">
-                                Popular
+                            }
+                            {animeData.year && <Badge size="small" variation="error">
+                                {animeData.year}
                             </Badge>
+                            }
                         </Flex>
 
-                        <Heading level={5}>
-                            Naruto Shippuden
+                        <Heading level={6} width={250} style={{ lineHeight: "1em", overflow: "hidden", textAlign:"left" }}>
+                            {animeData.title || ''}
                         </Heading>
 
                         {/* <Text as="span">
@@ -49,7 +54,7 @@ export const CustomCard = () => {
                             rivers through the snowy peaks on New Zealand.
                         </Text> */}
                         <Flex>
-                            <Button variation="destructive" width={120}>Seen</Button>
+                            <Button style={{ backgroundColor: "green", color: 'white' }} width={120}>Seen</Button>
                             <Button variation="primary" width={120}>WishList</Button>
                         </Flex>
 

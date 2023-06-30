@@ -1,14 +1,24 @@
 import React, { useState } from 'react'
 import api from '../services/api';
+import { useDispatch } from 'react-redux';
+import { getAnimeOverview } from '../rtk/slices/animeAdditionSlice';
 
 
 function Header({ signOut }) {
     const [name, setName] = useState("");
     const [animeList, setAnimeList] = useState("");
+    const dispatch = useDispatch();
+
     const searchAnime = () => {
         name &&
-            api.get(`/anime?q=${name}`).then((res) => setAnimeList(res.data))
+            // api.get(`/anime?q=${name}`).then((res) => setAnimeList(res.data))
+            dispatch(
+                getAnimeOverview({
+                    q: name,
+                })
+            );
     }
+    
     return (
         <header className=" text-black sticky shadow-lg top-0 p-8 flex items-start justify-between w-12/12 md:w-auto max-w-10xl  z-20 xl:items-center">
 
