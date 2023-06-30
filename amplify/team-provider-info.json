@@ -17,6 +17,9 @@
       },
       "api": {
         "myanimehub": {}
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
       }
     }
   }
