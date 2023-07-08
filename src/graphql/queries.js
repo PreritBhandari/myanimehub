@@ -1,29 +1,29 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
+export const getAnime = /* GraphQL */ `
+  query GetAnime($id: ID!) {
+    getAnime(id: $id) {
       id
-      name
-      description
+      isSeen
+      isWatchList
       createdAt
       updatedAt
       __typename
     }
   }
 `;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
+export const listAnime = /* GraphQL */ `
+  query ListAnime(
+    $filter: ModelAnimeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listAnime(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
+        isSeen
+        isWatchList
         createdAt
         updatedAt
         __typename
