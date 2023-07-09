@@ -35,3 +35,14 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.seenButton {
+  color: #008095;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+}
+
+.seenButton:hover {
+  color: green;
+  transform: scale(0.9);
+}

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Agent from '../agent/agent';
-// import { empty_pagination } from '../../constants/empty_pagination';
+import { empty_pagination } from '../../src/constants';
 
 const initialState = {
     loading: false,

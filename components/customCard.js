@@ -8,6 +8,7 @@ import {
     Text,
     Button,
     useTheme,
+    Icon,
 } from '@aws-amplify/ui-react';
 import { API } from "aws-amplify";
 
@@ -18,11 +19,14 @@ import {
 
 import { listAnime } from '../src/graphql/queries';
 import { useEffect, useState } from 'react';
+import { HiOutlineCheckCircle, HiCheckCircle } from "react-icons/hi";
+import NarutoSad from '../public/images/anime_icons/narutosad';
 
 
 export const CustomCard = ({ animeData }) => {
     const { tokens } = useTheme();
     const [animeInfo, setanimeInfo] = useState([]);
+    const [seen, setSeen] = useState(false)
 
     useEffect(() => {
         fetchAnimeStatus();
@@ -34,15 +38,17 @@ export const CustomCard = ({ animeData }) => {
         setanimeInfo(animeInfoFromAPI);
     }
 
+    const val = animeInfo.filter((res) => res.id == animeData.mal_id)
+    // console.log("value",val)
+    // const isSeen = val?.map((res => res.isSeen))
+
     async function updateAnime(value) {
+        value === "seen" && setSeen(!seen);
         const data = {
             id: animeData.mal_id,
-            isSeen: value === "seen" && true,
+            isSeen: seen,
             isWatchList: value === "wish" && true
         };
-
-        const val = animeInfo.filter((res) => res.id == animeData.mal_id)
-        console.log(val)
         await API.graphql({
             query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
             variables: { input: data },
@@ -89,11 +95,14 @@ export const CustomCard = ({ animeData }) => {
                         </Heading>
 
                         {/* <Text as="span">
-                            Join us on this beautiful outdoor adventure through the glittering
+                            Join us on this beautiful outdoor adventure through the glitteringx
                             rivers through the snowy peaks on New Zealand.
                         </Text> */}
                         <Flex>
-                            <Button style={{ backgroundColor: "green", color: 'white' }} width={120} onClick={() => updateAnime("seen")}>Seen</Button>
+                            <span className='seenButton' onClick={() => updateAnime("seen")}>
+                                {val[0]?.isSeen ? <img src={NarutoHappy} width={30} height={20} /> : <img src={NarutoSad} />}
+
+                            </span>
                             <Button variation="primary" width={120} onClick={() => updateAnime("wish")}>WishList</Button>
                         </Flex>
 
