@@ -9,6 +9,7 @@ import {
     Button,
     useTheme,
     Icon,
+    Divider,
 } from '@aws-amplify/ui-react';
 import { API } from "aws-amplify";
 
@@ -21,38 +22,63 @@ import { listAnime } from '../src/graphql/queries';
 import { useEffect, useState } from 'react';
 import { HiOutlineCheckCircle, HiCheckCircle } from "react-icons/hi";
 import NarutoSad from '../public/images/anime_icons/narutosad';
+import NarutoHappy from '../public/images/anime_icons/narutohappy';
+import SharinghanWish from '../public/images/anime_icons/sharinghanwish';
+import SharinghanNoWish from '../public/images/anime_icons/sharinghannot';
+import { Tooltip } from 'react-tooltip';
+import { animeMyListSelector, getMyList } from '../rtk/slices/mylistSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 
 export const CustomCard = ({ animeData }) => {
     const { tokens } = useTheme();
     const [animeInfo, setanimeInfo] = useState([]);
     const [seen, setSeen] = useState(false)
+    const [wish, setWish] = useState(false)
+    const { loading, pagination, myAnimeList } = useSelector(animeMyListSelector);
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fetchAnimeStatus();
     }, []);
 
     async function fetchAnimeStatus() {
-        const apiData = await API.graphql({ query: listAnime });
-        const animeInfoFromAPI = apiData.data.listAnime.items;
-        setanimeInfo(animeInfoFromAPI);
+        // const apiData = await API.graphql({ query: listAnime });
+        // const animeInfoFromAPI = apiData.data.listAnime.items;
+        dispatch(
+            getMyList({ query: listAnime })
+        );
+        setanimeInfo(myAnimeList?.listAnime?.items);
     }
 
-    const val = animeInfo.filter((res) => res.id == animeData.mal_id)
-    // console.log("value",val)
+    const val = animeInfo?.filter((res) => res.id == animeData?.mal_id)
+
+
+    console.log("value", val)
     // const isSeen = val?.map((res => res.isSeen))
 
     async function updateAnime(value) {
         value === "seen" && setSeen(!seen);
-        const data = {
+        value === "wish" && setWish(!wish);
+        const data = value === "seen" ? {
             id: animeData.mal_id,
             isSeen: seen,
-            isWatchList: value === "wish" && true
-        };
-        await API.graphql({
-            query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
+        } : value === "wish" ? {
+            id: animeData.mal_id,
+            isWatchList: wish,
+
+        } : null;
+        // await API.graphql({
+        //     query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
+        //     variables: { input: data },
+        // });
+
+        dispatch(getMyList({
+            query: val?.length === 0 ? createAnimeMutation : updateAnimeMutation,
             variables: { input: data },
-        });
+        }))
         fetchAnimeStatus();
 
     }
@@ -93,17 +119,22 @@ export const CustomCard = ({ animeData }) => {
                         <Heading level={6} width={250} style={{ lineHeight: "1em", overflow: "hidden", textAlign: "left" }}>
                             {animeData.title || ''}
                         </Heading>
-
-                        {/* <Text as="span">
-                            Join us on this beautiful outdoor adventure through the glitteringx
-                            rivers through the snowy peaks on New Zealand.
-                        </Text> */}
-                        <Flex>
-                            <span className='seenButton' onClick={() => updateAnime("seen")}>
-                                {val[0]?.isSeen ? <img src={NarutoHappy} width={30} height={20} /> : <img src={NarutoSad} />}
+                        <Divider />
+                        <Flex style={{ justifyContent: "space-between", width: 250 }}>
+                            <Tooltip id="custom-tooltip" style={{ backgroundColor: "rgb(187, 230, 208)", color: "#222" }}
+                            />
+                            <strong className='airingClass'>{animeData.airing ? 'Airing Now ...' : 'Completed ✅'}</strong>
+                            <span data-tooltip-id='custom-tooltip' data-tooltip-content="Add to Seen List" className='seenButton' onClick={() => updateAnime("seen")}>
+                                {val?.[0]?.isSeen ? <NarutoHappy /> : <NarutoSad />}
+                            </span>
+                            <span data-tooltip-id='custom-tooltip' data-tooltip-content="Add to Wish List" className='wishButton' onClick={() => updateAnime("wish")}>
+                                {val?.[0]?.isWatchList ?
+                                    <SharinghanWish />
+                                    :
+                                    <SharinghanNoWish />
+                                }
 
                             </span>
-                            <Button variation="primary" width={120} onClick={() => updateAnime("wish")}>WishList</Button>
                         </Flex>
 
                     </Flex>

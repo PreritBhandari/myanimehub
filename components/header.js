@@ -2,23 +2,22 @@ import React, { useState } from 'react'
 import api from '../services/api';
 import { useDispatch } from 'react-redux';
 import { getAnimeOverview } from '../rtk/slices/animeAdditionSlice';
+import Link from 'next/link';
 
 
 function Header({ signOut }) {
     const [name, setName] = useState("");
-    const [animeList, setAnimeList] = useState("");
     const dispatch = useDispatch();
 
     const searchAnime = () => {
         name &&
-            // api.get(`/anime?q=${name}`).then((res) => setAnimeList(res.data))
             dispatch(
                 getAnimeOverview({
                     q: name,
                 })
             );
     }
-    
+
     return (
         <header className=" text-black sticky shadow-lg top-0 p-8 flex items-start justify-between w-12/12 md:w-auto max-w-10xl  z-20 xl:items-center">
 
@@ -35,7 +34,9 @@ function Header({ signOut }) {
 
             </div>
             <div className='flex flex-row gap-x-2 overflow-visible'>
-                <strong onClick={signOut} className='w-16 md:w-20 text-sm text-center md:text-md cursor-pointer text-white-500 box-border bg-green-100 rounded-md p-1 md:p-2 hover:bg-green-200'>My List</strong>
+                <Link href={'/mylist'}>
+                    <strong className='w-16 md:w-20 text-sm text-center md:text-md cursor-pointer text-white-500 box-border bg-green-100 rounded-md p-1 md:p-2 hover:bg-green-200'>My List</strong>
+                </Link>
                 <strong onClick={signOut} className='w-16 md:w-20  text-sm md:text-md text-center cursor-pointer text-white-500 box-border bg-green-100 rounded-md p-1 md:p-2 hover:bg-green-200'>Logout</strong>
             </div>
 

@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { reducer as animeAdditionReducer } from '../slices/animeAdditionSlice';
-
+import { reducer as myAnimeListReducer } from '../slices/mylistSlice'
 
 const appReducer = combineReducers({
     /**
@@ -10,6 +10,7 @@ const appReducer = combineReducers({
      */
 
     animeOverview: animeAdditionReducer,
+    myAnimeList: myAnimeListReducer
 });
 
 const rootReducer = (state, action) => {

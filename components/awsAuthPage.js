@@ -8,7 +8,7 @@ import {
   View,
   Card,
 } from "@aws-amplify/ui-react";
-import Header from "../pages/header";
+import Header from "./header";
 
 function AWSAuthPage({ signOut }) {
   return (
