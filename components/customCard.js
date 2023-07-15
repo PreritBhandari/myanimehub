@@ -36,49 +36,48 @@ export const CustomCard = ({ animeData }) => {
     const [animeInfo, setanimeInfo] = useState([]);
     const [seen, setSeen] = useState(false)
     const [wish, setWish] = useState(false)
-    const { loading, pagination, myAnimeList } = useSelector(animeMyListSelector);
+    // const { loading, pagination, myAnimeList } = useSelector(animeMyListSelector);
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     useEffect(() => {
         fetchAnimeStatus();
     }, []);
 
     async function fetchAnimeStatus() {
-        // const apiData = await API.graphql({ query: listAnime });
-        // const animeInfoFromAPI = apiData.data.listAnime.items;
-        dispatch(
-            getMyList({ query: listAnime })
-        );
-        setanimeInfo(myAnimeList?.listAnime?.items);
+        const apiData = await API.graphql({ query: listAnime });
+        const animeInfoFromAPI = apiData.data.listAnime.items;
+        // dispatch(
+        //     getMyList({ query: listAnime })
+        // );
+        // setanimeInfo(myAnimeList?.listAnime?.items);
+        setanimeInfo(animeInfoFromAPI);
     }
 
     const val = animeInfo?.filter((res) => res.id == animeData?.mal_id)
 
-
-    console.log("value", val)
     // const isSeen = val?.map((res => res.isSeen))
 
     async function updateAnime(value) {
-        value === "seen" && setSeen(!seen);
-        value === "wish" && setWish(!wish);
+        value === "seen" && setSeen(!val?.[0]?.isSeen);
+        value === "wish" && setWish(!val?.[0]?.isWatchList);
         const data = value === "seen" ? {
             id: animeData.mal_id,
-            isSeen: seen,
-        } : value === "wish" ? {
+            isSeen: !val?.[0]?.isSeen,
+        } : {
             id: animeData.mal_id,
-            isWatchList: wish,
+            isWatchList: !val?.[0]?.isWatchList,
 
-        } : null;
-        // await API.graphql({
-        //     query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
-        //     variables: { input: data },
-        // });
-
-        dispatch(getMyList({
-            query: val?.length === 0 ? createAnimeMutation : updateAnimeMutation,
+        };
+        await API.graphql({
+            query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
             variables: { input: data },
-        }))
+        });
+
+        // dispatch(getMyList({
+        //     query: val?.length === 0 ? createAnimeMutation : updateAnimeMutation,
+        //     variables: { input: data },
+        // }))
         fetchAnimeStatus();
 
     }
