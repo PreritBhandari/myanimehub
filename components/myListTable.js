@@ -1,6 +1,6 @@
 import { API } from 'aws-amplify';
 import React, { useEffect, useState } from 'react'
-import { listAnime } from '../src/graphql/queries';
+import { listMyAnimeHubs } from '../src/graphql/queries';
 
 function MyListTable() {
 
@@ -8,35 +8,51 @@ function MyListTable() {
 
     useEffect(() => {
         fetchAnimeStatus();
-        // console.log(animeInfo)
     }, []);
 
     async function fetchAnimeStatus() {
-        const apiData = await API.graphql({ query: listAnime });
-        const animeInfoFromAPI = apiData.data.listAnime.items;
-        // setanimeInfo(animeInfoFromAPI);
-        setanimeInfo(animeInfoFromAPI.filter((res) => res?.animeData));
-        // console.log(animeInfo[0].animeData[0].map)
-        console.log(animeInfo)
+        const apiData = await API.graphql({ query: listMyAnimeHubs });
+        const animeInfoFromAPI = apiData.data.listMyAnimeHubs.items;
+        setanimeInfo(animeInfoFromAPI);
+        console.log(animeInfoFromAPI)
 
     }
     return (
-        <table class="bg-slate-400 w-11/12 m-auto  table-fixed border-collapse border border-slate-400  shadow-custom">
-            <thead>
-                <tr >
-                    <th >My Seen List</th>
-                    <th >My Watch List</th>
-                </tr>
-            </thead>
-            <tbody >
-                {animeInfo.map((res) =>
-                    res.animeData && <tr key={res.id}>
-                        {/* <td >{JSON.parse(res?.animeData)?.mal_id}</td> */}
-                        <td>{res.animeData[0]}</td>
+        <div class="flex flex-row items-start w-12/12 justify-between">
+            
+            <table class="bg-slate-400 w-5/12 ml-20  table-fixed border-collapse border border-slate-400  shadow-custom">
+                <thead>
+                    <tr class="font-extrabold text-lg">
+                        <th >My Seen List</th>
+                        {/* <th >My Watch List</th> */}
                     </tr>
-                )}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="font-mono">
+                    {animeInfo.map((res) =>
+                        res.isSeen && <tr key={res.id}>
+                            {/* <td >{JSON.parse(res?.animeData)?.mal_id}</td> */}
+                            <td>{res.title}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+            <table class="bg-slate-400 w-5/12 mr-20   table-fixed border-collapse border border-slate-400  shadow-custom">
+                <thead>
+                    <tr class="font-extrabold text-lg">
+                        <th >My Watch List</th>
+                        {/* <th >My Watch List</th> */}
+                    </tr>
+                </thead>
+                <tbody class="font-mono">
+                    {animeInfo.map((res) =>
+                        res.isWatchList && <tr key={res.id}>
+                            {/* <td >{JSON.parse(res?.animeData)?.mal_id}</td> */}
+                            <td>{res.title}</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
     )
 }
 

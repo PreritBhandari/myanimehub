@@ -69,3 +69,16 @@ td {
   border: 1px solid rgb(187 247 208);
 }
 
+/* .amplify-expander__trigger {
+  background-color: green !important;
+  width: 200px !important;
+} */
+
+.amplify-expander__icon{
+  width: 20px !important;
+}
+
+.my-expander {
+  background-color: var(--amplify-colors-brand-primary-80);
+  color: var(--amplify-colors-white);
+}

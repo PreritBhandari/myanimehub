@@ -14,11 +14,11 @@ import {
 import { API } from "aws-amplify";
 
 import {
-    updateAnime as updateAnimeMutation,
-    createAnime as createAnimeMutation,
+    updateMyAnimeHub as updateAnimeMutation,
+    createMyAnimeHub as createAnimeMutation,
 } from "../src/graphql/mutations";
 
-import { listAnime } from '../src/graphql/queries';
+import { listMyAnimeHubs } from '../src/graphql/queries';
 import { useEffect, useState } from 'react';
 import { HiOutlineCheckCircle, HiCheckCircle } from "react-icons/hi";
 import NarutoSad from '../public/images/anime_icons/narutosad';
@@ -45,12 +45,12 @@ export const CustomCard = ({ animeData }) => {
     }, []);
 
     async function fetchAnimeStatus() {
-        const apiData = await API.graphql({ query: listAnime });
-        const animeInfoFromAPI = apiData.data.listAnime.items;
+        const apiData = await API.graphql({ query: listMyAnimeHubs });
+        const animeInfoFromAPI = apiData.data.listMyAnimeHubs.items;
         // dispatch(
-        //     getMyList({ query: listAnime })
+        //     getMyList({ query: listMyAnimeHubs })
         // );
-        // setanimeInfo(myAnimeList?.listAnime?.items);
+        // setanimeInfo(myAnimeList?.listMyAnimeHubs?.items);
         setanimeInfo(animeInfoFromAPI);
     }
 
@@ -69,7 +69,6 @@ export const CustomCard = ({ animeData }) => {
             id: animeData.mal_id,
             isWatchList: !val?.[0]?.isWatchList,
             title: animeData.title,
-
         };
         await API.graphql({
             query: val.length === 0 ? createAnimeMutation : updateAnimeMutation,
