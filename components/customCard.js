@@ -64,11 +64,11 @@ export const CustomCard = ({ animeData }) => {
         const data = value === "seen" ? {
             id: animeData.mal_id,
             isSeen: !val?.[0]?.isSeen,
-            animeData: animeData,
+            title: animeData.title,
         } : {
             id: animeData.mal_id,
             isWatchList: !val?.[0]?.isWatchList,
-            animeData: animeData,
+            title: animeData.title,
 
         };
         await API.graphql({

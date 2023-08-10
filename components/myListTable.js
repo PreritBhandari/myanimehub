@@ -8,12 +8,17 @@ function MyListTable() {
 
     useEffect(() => {
         fetchAnimeStatus();
+        // console.log(animeInfo)
     }, []);
 
     async function fetchAnimeStatus() {
         const apiData = await API.graphql({ query: listAnime });
         const animeInfoFromAPI = apiData.data.listAnime.items;
-        setanimeInfo(animeInfoFromAPI);
+        // setanimeInfo(animeInfoFromAPI);
+        setanimeInfo(animeInfoFromAPI.filter((res) => res?.animeData));
+        // console.log(animeInfo[0].animeData[0].map)
+        console.log(animeInfo)
+
     }
     return (
         <table class="bg-slate-400 w-11/12 m-auto  table-fixed border-collapse border border-slate-400  shadow-custom">
@@ -25,9 +30,9 @@ function MyListTable() {
             </thead>
             <tbody >
                 {animeInfo.map((res) =>
-                    <tr key={res.id}>
-                        <td >The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                        <td>Malcolm Lockyer</td>
+                    res.animeData && <tr key={res.id}>
+                        {/* <td >{JSON.parse(res?.animeData)?.mal_id}</td> */}
+                        <td>{res.animeData[0]}</td>
                     </tr>
                 )}
             </tbody>

@@ -15,11 +15,11 @@
       "auth": {
         "myanimehub387b8d33": {}
       },
-      "api": {
-        "myanimehub": {}
-      },
       "hosting": {
         "S3AndCloudFront": {}
+      },
+      "api": {
+        "myanimehub": {}
       }
     }
   }
